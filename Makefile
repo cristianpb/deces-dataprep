@@ -7,6 +7,7 @@ GITROOT = https://github.com/matchid-project
 GITBACKEND = backend
 MAKE = $(shell which make)
 RECIPE = deces_dataprep
+RECIPE_LOCAL = deces_dataprep_upload
 RECIPE_THREADS = 4
 RECIPE_QUEUE = 1
 TIMEOUT = 2520
@@ -132,6 +133,10 @@ recipe-run: s3.tag
 			touch recipe-run s3-pull &&\
 			(echo esdata_${DATAPREP_VERSION}_$$(cat s3.tag).tar > elasticsearch-restore);\
 	fi
+
+local-recipe-run: ${GITBACKEND}
+	cp -r upload backend
+	${MAKE} -C ${GITBACKEND} elasticsearch recipe-run RECIPE=${RECIPE_LOCAL} RECIPE_THREADS=${RECIPE_THREADS} RECIPE_QUEUE=${RECIPE_QUEUE}
 
 full-check: datagouv-to-s3 s3-backup-list
 	@if [ -s s3-backup-list ]; then\
