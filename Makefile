@@ -7,7 +7,7 @@ GITROOT = https://github.com/matchid-project
 GITBACKEND = backend
 MAKE = $(shell which make)
 RECIPE = deces_dataprep
-RECIPE_LOCAL = deces_dataprep_upload
+RECIPE_LOCAL = deces_dataprep
 RECIPE_THREADS = 4
 RECIPE_QUEUE = 1
 TIMEOUT = 2520
@@ -136,7 +136,7 @@ recipe-run: s3.tag
 
 local-recipe-run: ${GITBACKEND}
 	cp -r upload backend
-	${MAKE} -C ${GITBACKEND} elasticsearch recipe-run RECIPE=${RECIPE_LOCAL} RECIPE_THREADS=${RECIPE_THREADS} RECIPE_QUEUE=${RECIPE_QUEUE}
+	${MAKE} -C ${GITBACKEND} elasticsearch recipe-run RECIPE=${RECIPE_LOCAL} RECIPE_THREADS=${RECIPE_THREADS} RECIPE_QUEUE=${RECIPE_QUEUE} FILES_TO_PROCESS="${FILES_TO_PROCESS}"
 
 full-check: datagouv-to-s3 s3-backup-list
 	@if [ -s s3-backup-list ]; then\
@@ -539,4 +539,3 @@ remote-all: full-check
 	@if [ ! -f "no-remote" ];then\
 		${MAKE} remote-config remote-step1 remote-watch remote-step2 remote-clean;\
 	fi
-
