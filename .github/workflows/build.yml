@@ -9,7 +9,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - run: make all-step0 recipe-run FILES_TO_PROCESS=deces-2020-m01.txt.gz STORAGE_ACCESS_KEY=$STORAGE_ACCESS_KEY STORAGE_SECRET_KEY=$STORAGE_SECRET_KEY
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v2
+      - run: make all-step0 recipe-run FILES_TO_PROCESS=deces-2020-m01.txt.gz STORAGE_ACCESS_KEY=$STORAGE_ACCESS_KEY STORAGE_SECRET_KEY=$STORAGE_SECRET_KEY RECIPE_THREADS=2
         env:
           STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
           STORAGE_SECRET_KEY: ${{ secrets.STORAGE_SECRET_KEY }}
