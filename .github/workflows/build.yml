@@ -1,0 +1,15 @@
+name: Build data
+
+on: [push]
+
+jobs:
+  build:
+    name: Docker image build CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - run: make all-step0 recipe-run FILES_TO_PROCESS=deces-2020-m01.txt.gz STORAGE_ACCESS_KEY=$STORAGE_ACCESS_KEY STORAGE_SECRET_KEY=$STORAGE_SECRET_KEY
+        env:
+          STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+          STORAGE_SECRET_KEY: ${{ secrets.STORAGE_SECRET_KEY }}
