@@ -14,7 +14,7 @@ export MAKE = ${MAKEBIN} --no-print-directory -s
 export ES_NODES=1
 export ES_MEM=1024m
 export ERR_MAX=20
-export ES_PRELOAD=["nvd", "dvd"]
+export ES_PRELOAD=[]
 export CHUNK_SIZE=10000
 export RECIPE = deces_dataprep
 export RECIPE_THREADS = 4
@@ -190,7 +190,7 @@ down:
 
 clean: down
 	@sudo rm -rf ${GIT_BACKEND} frontend ${DATA_DIR} data-tag config \
-		recipe-run backup-check elasticsearch-restore watch-run full\
+		recipe-run backup-check datagouv-to-storage elasticsearch-restore watch-run full\
 		backup backup-pull backup-push no-remote
 
 # launch all locally
