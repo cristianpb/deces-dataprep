@@ -1,0 +1,19 @@
+name: Build data
+
+on: [push]
+
+jobs:
+  build:
+    name: Docker image build CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: 🏃 Run full on 2020-m01
+        run: make config full backup STORAGE_ACCESS_KEY=$STORAGE_ACCESS_KEY STORAGE_SECRET_KEY=$STORAGE_SECRET_KEY CHUNK_SIZE=5000 ES_THREADS=2 RECIPE_THREADS=2 ES_MEM=4000m
+        env:
+          STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+          STORAGE_SECRET_KEY: ${{ secrets.STORAGE_SECRET_KEY }}
+          FILES_TO_SYNC: deces-2020-m01.txt(.gz)?
+          FILES_TO_PROCESS: deces-2020-m01.txt.gz
+          DATAGOUV_CONNECTOR: upload
